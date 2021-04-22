@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
-const EditMovieForm = (props) => {
+const AddMovieForm = (props) => {
 	const { push } = useHistory();
 	const { id } = useParams();
 	// Next, we need to grab the id being passed into the component through the url. Use the `useParams` hook to get the id value.
@@ -37,14 +37,14 @@ const EditMovieForm = (props) => {
         });
     }
 
-	// At this point, nothing happens when the edit form is submitted. Add in the api call needed to update the server with our updated movie data.
     const handleSubmit = (e) => {
 		e.preventDefault();
 		axios
-		.put(`http://localhost:5000/api/movies/${id}`)
+		.post(`http://localhost:5000/api/movies/`)
 		.then((res)=>{
+            console.log(res)
 			props.setMovies(res)
-			push(`/movies/${id}`)
+			push(`/movies`)
 		})
 		.catch((err)=>{
 			console.log({err})
@@ -58,7 +58,7 @@ const EditMovieForm = (props) => {
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Editing <strong>{movie.title}</strong></h4>
+					<h4 className="modal-title">Add Movie <strong>{movie.title}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
@@ -84,7 +84,7 @@ const EditMovieForm = (props) => {
 									
 				</div>
 				<div className="modal-footer">			    
-					<input type="submit" className="btn btn-info" value="Save"/>
+					<input type="submit" className="btn btn-info" value="Add"/>
 					<Link to={`/movies`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
 			</form>
@@ -92,4 +92,4 @@ const EditMovieForm = (props) => {
 	</div>);
 }
 
-export default EditMovieForm;
+export default AddMovieForm;
